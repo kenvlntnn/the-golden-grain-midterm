@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | The Golden Grain Co.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#fef3c7', 
+                            DEFAULT: '#f59e0b', 
+                            dark: '#b45309', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hover-scale { transition: transform 0.3s ease; }
+        .hover-scale:hover { transform: scale(1.05); }
+
+        .bg-animated-gradient {
+            background: linear-gradient(-45deg, #fef3c7, #ffffff, #fde68a, #fef3c7);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Smooth filtering transition */
+        .product-card {
+            transition: all 0.4s ease-in-out;
+        }
+        .hide-product {
+            opacity: 0;
+            transform: scale(0.9);
+            position: absolute;
+            pointer-events: none;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <nav class="bg-white shadow-md fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center hover-scale">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="logo.png" alt="The Golden Grain Co. Logo" class="h-12 w-12 object-contain bg-brand-light rounded-full p-1" onerror="this.src='https://via.placeholder.com/150?text=Logo'">
+                        <span class="font-bold text-2xl text-brand-dark tracking-tight">The Golden Grain Co.</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-brand transition-colors">Home</a>
+                    <a href="products.html" class="text-brand-dark font-semibold border-b-2 border-brand">Products</a>
+                    <a href="about.html" class="text-gray-600 hover:text-brand transition-colors">About Us</a>
+                    <a href="services.html" class="text-gray-600 hover:text-brand transition-colors">Services</a>
+                    <a href="faq.html" class="text-gray-600 hover:text-brand transition-colors">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-animated-gradient overflow-hidden">
+        <canvas id="particle-canvas"></canvas>
+        <div class="max-w-7xl mx-auto text-center relative z-10 reveal">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Our Premium Selection</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Explore our carefully curated inventory of top-tier rice, fresh eggs, and high-quality cooking oil. Available for both wholesale and retail.
+            </p>
+        </div>
+    </header>
+
+    <section class="py-16 bg-white min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12 reveal">
+                <button class="filter-btn active bg-brand text-white px-6 py-2 rounded-full font-semibold shadow-md transition-colors" data-filter="all">All Products</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-brand hover:text-white px-6 py-2 rounded-full font-semibold transition-colors" data-filter="rice">Premium Rice</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-brand hover:text-white px-6 py-2 rounded-full font-semibold transition-colors" data-filter="essentials">Daily Essentials</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative" id="productGrid">
+                
+                <div class="product-card bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl overflow-hidden group reveal" data-category="rice">
+                    <div class="h-96 bg-gray-200 relative overflow-hidden">
+                        <img src="https://tristellarcorp.com/wp-content/uploads/2025/01/Tristellar-Rice-Royale-25KG-300x300.png" alt="Four Star Rice" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-brand text-white text-xs font-bold px-3 py-1 rounded-full shadow">Best Seller</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Royale Mindoro</h3>
+                        <p class="text-gray-600 text-sm mb-4">Top-grade, fragrant, and perfectly milled rice ideal for special occasions and premium daily consumption.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-brand-dark font-bold">Retail & Wholesale</span>
+                            <button class="text-brand hover:text-brand-dark font-semibold"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl overflow-hidden group reveal" data-category="rice" style="transition-delay: 100ms;">
+                    <div class="h-96 bg-gray-200 relative overflow-hidden">
+                        <img src="https://megarichrice.com/_assets/media/71ba56b54de0e2c899d0056e787e10b9.png" alt="Fuji Rice" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Fuji Quality Rice</h3>
+                        <p class="text-gray-600 text-sm mb-4">Known for its soft texture and brilliant white grains. A reliable favorite for households and restaurants alike.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-brand-dark font-bold">Retail & Wholesale</span>
+                            <button class="text-brand hover:text-brand-dark font-semibold"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl overflow-hidden group reveal" data-category="rice" style="transition-delay: 200ms;">
+                    <div class="h-96 bg-gray-200 relative overflow-hidden">
+                        <img src="https://tristellarcorp.com/wp-content/uploads/2025/01/Tristellar-Trading-Corporation-Premium-Rice.png" alt="Vikings Rice" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full shadow">Bulk Choice</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Datu Maharlika</h3>
+                        <p class="text-gray-600 text-sm mb-4">Excellent yield and fluffy texture when cooked. The smart choice for bulk buyers and food businesses.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-brand-dark font-bold">Retail & Wholesale</span>
+                            <button class="text-brand hover:text-brand-dark font-semibold"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl overflow-hidden group reveal" data-category="essentials">
+                    <div class="h-96 bg-gray-200 relative overflow-hidden">
+                        <img src="https://assets.vogue.com/photos/69409e19496dc9b72e7e755a/4:3/w_2400,h_1800,c_limit/AdobeStock_248253485%20copy.jpg" alt="Fresh Eggs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Farm-Fresh Eggs</h3>
+                        <p class="text-gray-600 text-sm mb-4">Locally sourced, graded fresh eggs available per tray. Assorted sizes available for everyday kitchen needs.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-brand-dark font-bold">Per Tray / Bulk</span>
+                            <button class="text-brand hover:text-brand-dark font-semibold"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl overflow-hidden group reveal" data-category="essentials" style="transition-delay: 100ms;">
+                    <div class="h-96 bg-gray-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Cooking Oil" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Premium Cooking Oil</h3>
+                        <p class="text-gray-600 text-sm mb-4">Clear, high-quality cooking oil perfect for frying and general cooking. Available in retail bottles and wholesale containers.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-brand-dark font-bold">Retail & Wholesale</span>
+                            <button class="text-brand hover:text-brand-dark font-semibold"><i class="fas fa-cart-plus mr-1"></i> Inquire</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-900 text-white py-16 text-center reveal">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-4">Looking for a custom wholesale order?</h2>
+            <p class="text-gray-400 mb-8">Contact us directly to discuss bulk pricing, scheduled deliveries, and how our inventory system can keep your business fully stocked.</p>
+            <a href="services.html" class="bg-brand hover:bg-yellow-400 text-black font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">Partner With Us</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-400 py-12 text-center">
+        <p>&copy; 2026 The Golden Grain Co. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- UI LOGIC ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-lg', 'py-0');
+            } else {
+                nav.classList.remove('shadow-lg', 'py-0');
+            }
+        });
+
+        // --- PRODUCT FILTER LOGIC ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button styling
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                btn.classList.add('bg-brand', 'text-white');
+
+                // Filter products
+                const filterValue = btn.getAttribute('data-filter');
+                
+                productCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.classList.remove('hide-product');
+                        // Small timeout to allow display change before opacity transition
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                            card.style.position = 'relative';
+                        }, 50);
+                    } else {
+                        card.classList.add('hide-product');
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            card.style.position = 'absolute';
+                        }, 400); // Wait for transition to finish
+                    }
+                });
+            });
+        });
+
+        // --- SCROLL REVEAL ANIMATIONS ---
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', revealElements);
+        revealElements(); 
+
+        // --- FLOATING GOLDEN PARTICLES ---
+        const partCanvas = document.getElementById('particle-canvas');
+        const partCtx = partCanvas.getContext('2d');
+        let particlesArray;
+
+        function resizeCanvas() {
+            partCanvas.width = partCanvas.parentElement.offsetWidth;
+            partCanvas.height = partCanvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); 
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * partCanvas.width;
+                this.y = Math.random() * partCanvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = `rgba(245, 158, 11, ${Math.random() * 0.5})`; 
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.size > 0.2) this.size -= 0.01;
+                if (this.x < 0 || this.x > partCanvas.width || 
+                    this.y < 0 || this.y > partCanvas.height || this.size <= 0.2) {
+                    this.x = Math.random() * partCanvas.width;
+                    this.y = Math.random() * partCanvas.height;
+                    this.size = Math.random() * 3 + 1;
+                }
+            }
+            draw() {
+                partCtx.fillStyle = this.color;
+                partCtx.beginPath();
+                partCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                partCtx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            const numberOfParticles = (partCanvas.height * partCanvas.width) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            partCtx.clearRect(0, 0, partCanvas.width, partCanvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>

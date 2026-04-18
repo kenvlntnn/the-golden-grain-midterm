@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | The Golden Grain Co.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#fef3c7', 
+                            DEFAULT: '#f59e0b', 
+                            dark: '#b45309', 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hover-scale { transition: transform 0.3s ease; }
+        .hover-scale:hover { transform: scale(1.05); }
+
+        .bg-animated-gradient {
+            background: linear-gradient(-45deg, #fef3c7, #ffffff, #fde68a, #fef3c7);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* FAQ Accordion Transitions */
+        .faq-content {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-content.open {
+            max-height: 200px; /* Arbitrary large number to fit content */
+            opacity: 1;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <nav class="bg-white shadow-md fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center hover-scale">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <img src="logo.png" alt="The Golden Grain Co. Logo" class="h-12 w-12 object-contain bg-brand-light rounded-full p-1" onerror="this.src='https://via.placeholder.com/150?text=Logo'">
+                        <span class="font-bold text-2xl text-brand-dark tracking-tight">The Golden Grain Co.</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-brand transition-colors">Home</a>
+                    <a href="products.html" class="text-gray-600 hover:text-brand transition-colors">Products</a>
+                    <a href="about.html" class="text-gray-600 hover:text-brand transition-colors">About Us</a>
+                    <a href="services.html" class="text-gray-600 hover:text-brand transition-colors">Services</a>
+                    <a href="faq.html" class="text-brand-dark font-semibold border-b-2 border-brand">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-animated-gradient overflow-hidden">
+        <canvas id="particle-canvas"></canvas>
+        <div class="max-w-7xl mx-auto text-center relative z-10 reveal">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Frequently Asked Questions</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Got questions? We've got answers. Find out everything you need to know about our products, wholesale services, and distribution.
+            </p>
+        </div>
+    </header>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            
+            <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-shadow reveal" onclick="toggleFAQ('faq1', 'icon1')">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">What types of rice brands do you offer?</h3>
+                    <div class="w-8 h-8 bg-brand-light rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="icon1"></i>
+                    </div>
+                </div>
+                <div class="faq-content text-gray-600" id="faq1">
+                    We curate only the best quality grains for our customers. Our premium selection heavily features top-tier brands. We cater to both everyday household needs and specific restaurant requirements.
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-shadow reveal" style="transition-delay: 100ms;" onclick="toggleFAQ('faq2', 'icon2')">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">Do you offer bulk pricing for restaurants and resellers?</h3>
+                    <div class="w-8 h-8 bg-brand-light rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="icon2"></i>
+                    </div>
+                </div>
+                <div class="faq-content text-gray-600" id="faq2">
+                    Absolutely! Our wholesale distribution service is tailored specifically for B2B clients such as restaurants, carinderias, and local retail stores. We offer highly competitive, discounted pricing tiers for bulk orders.
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-shadow reveal" style="transition-delay: 200ms;" onclick="toggleFAQ('faq3', 'icon3')">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">How do you ensure your products are always in stock?</h3>
+                    <div class="w-8 h-8 bg-brand-light rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="icon3"></i>
+                    </div>
+                </div>
+                <div class="faq-content text-gray-600" id="faq3">
+                    We utilize a custom-built <strong>Rice Distribution and Inventory Management System</strong>. This technology allows us to precisely track our stock levels in real-time, predict demand, and reorder before supplies run low, ensuring our shelves are never empty.
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-shadow reveal" style="transition-delay: 300ms;" onclick="toggleFAQ('faq4', 'icon4')">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">Aside from rice, what other products do you sell?</h3>
+                    <div class="w-8 h-8 bg-brand-light rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="icon4"></i>
+                    </div>
+                </div>
+                <div class="faq-content text-gray-600" id="faq4">
+                    To be your complete daily staple provider, we also distribute farm-fresh eggs (available per tray or in bulk) and premium, clear cooking oil for both retail and wholesale customers.
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-shadow reveal" style="transition-delay: 400ms;" onclick="toggleFAQ('faq5', 'icon5')">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-900">Can I schedule regular deliveries for my business?</h3>
+                    <div class="w-8 h-8 bg-brand-light rounded-full flex items-center justify-center text-brand">
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="icon5"></i>
+                    </div>
+                </div>
+                <div class="faq-content text-gray-600" id="faq5">
+                    Yes. As part of our B2B Inventory Solutions, we can set up automated, scheduled deliveries based on your usage rates. We aim to act as an extension of your own business's supply chain.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bg-brand-light py-16 text-center reveal">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-md text-brand text-4xl">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Still have questions?</h2>
+            <p class="text-gray-600 mb-8 text-lg">If you couldn't find the answer you were looking for, our team is ready to assist you with specific inquiries regarding pricing, availability, and partnership opportunities.</p>
+            <a href="index.html" class="bg-brand hover:bg-brand-dark text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:-translate-y-1 inline-block shadow-lg">Back to Home</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-400 py-12 text-center">
+        <p>&copy; 2026 The Golden Grain Co. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- UI LOGIC ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-lg', 'py-0');
+            } else {
+                nav.classList.remove('shadow-lg', 'py-0');
+            }
+        });
+
+        // --- FAQ ACCORDION LOGIC ---
+        function toggleFAQ(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            
+            // Toggle classes for smooth height/opacity transition
+            content.classList.toggle('open');
+            
+            // Rotate the chevron icon
+            icon.classList.toggle('rotate-180');
+        }
+
+        // --- SCROLL REVEAL ANIMATIONS ---
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', revealElements);
+        revealElements(); 
+
+        // --- FLOATING GOLDEN PARTICLES ---
+        const partCanvas = document.getElementById('particle-canvas');
+        const partCtx = partCanvas.getContext('2d');
+        let particlesArray;
+
+        function resizeCanvas() {
+            partCanvas.width = partCanvas.parentElement.offsetWidth;
+            partCanvas.height = partCanvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); 
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * partCanvas.width;
+                this.y = Math.random() * partCanvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = `rgba(245, 158, 11, ${Math.random() * 0.5})`; 
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.size > 0.2) this.size -= 0.01;
+                if (this.x < 0 || this.x > partCanvas.width || 
+                    this.y < 0 || this.y > partCanvas.height || this.size <= 0.2) {
+                    this.x = Math.random() * partCanvas.width;
+                    this.y = Math.random() * partCanvas.height;
+                    this.size = Math.random() * 3 + 1;
+                }
+            }
+            draw() {
+                partCtx.fillStyle = this.color;
+                partCtx.beginPath();
+                partCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                partCtx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            const numberOfParticles = (partCanvas.height * partCanvas.width) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            partCtx.clearRect(0, 0, partCanvas.width, partCanvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
